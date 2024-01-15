@@ -32,12 +32,17 @@ app.post('/accounts', (req, res) => {
     store.accounts.push(newAccount)
     res.status(201).send({id: id})
 })
-
 app.get('/accounts/:id', (req, res) => {
-    let id = req.params.id;
-    let selectAccount = store.accounts[id]
-    res.status(200).send(selectAccount);
-})
+    let id = parseInt(req.params.id); // Convertir el ID a un número entero
+    let selectAccount = store.accounts[id];
+
+    if (selectAccount) {
+        res.status(200).send(selectAccount);
+    } else {
+        res.status(404).send("Account not found");
+    }
+});
+
 
 app.put('/accounts/:id', (req, res) => {
     store.accounts[req.params.id] = req.body
