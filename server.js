@@ -30,33 +30,23 @@ app.post('/accounts', (req, res) => {
     let newAccount = req.body
     let id = store.accounts.length
     store.accounts.push(newAccount)
+    res.status(201).send({id: id})
+})
 
-    res.status(201).send({ id: id })
-});
+app.get('/accounts/:id', (req, res) => {
+    let id = req.params.id;
+    let selectAccount = store.accounts[id]
+    res.status(200).send(selectAccount);
+})
 
 app.put('/accounts/:id', (req, res) => {
     store.accounts[req.params.id] = req.body
     res.status(200).send(store.accounts[req.params.id])
-  })
-
-  app.delete('/accounts/:id', (req, res) => {
-  store.accounts.splice(req.params.id, 1)
-  res.status(204).send()
 })
 
-app.get('/accounts/:id', (req, res) => {
-    const accountId = req.params.id;
-
-    // Verificar si la cuenta existe en el almacenamiento
-    const account = store.accounts[accountId];
-
-    if (account) {
-        // Devolver la cuenta si se encuentra
-        res.status(200).send(account);
-    } else {
-        // Devolver un código 404 si la cuenta no se encuentra
-        res.status(404).send("Account not found");
-    }
-});
+app.delete('/accounts/:id', (req, res) => {
+    store.accounts.splice(req.params.id, 1)
+    res.status(204).send()
+})
 
 app.listen(3000)
