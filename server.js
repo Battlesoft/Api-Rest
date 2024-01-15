@@ -31,9 +31,6 @@ app.post('/accounts', (req, res) => {
     let id = store.accounts.length
     store.accounts.push(newAccount)
 
-    // Log para depuración
-    console.log('Accounts after POST:', store.accounts);
-
     res.status(201).send({ id: id })
 });
 
@@ -49,10 +46,6 @@ app.put('/accounts/:id', (req, res) => {
 
 app.get('/accounts/:id', (req, res) => {
     const accountId = req.params.id;
-
-    // Log para depuración
-    console.log('Requested Account ID:', accountId);
-    console.log('All Accounts:', store.accounts);
 
     // Verificar si la cuenta existe en el almacenamiento
     const account = store.accounts[accountId];
